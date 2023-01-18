@@ -10,6 +10,10 @@
     "preinstall": "scripts/install-git-hooks",
     "release": "standard-version"
   },
+  "files": [
+    "package.json",
+    "nodes/"
+  ],
   "author": "",
   "devDependencies": {
     "@commitlint/cli": "^17.4.2",

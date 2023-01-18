@@ -3,7 +3,7 @@ name: Release and Upload
 on:
   push:
     branches:
-      - use-standard-version
+      - master
 
 jobs:
   build-release:
@@ -31,10 +31,6 @@ jobs:
           sed -n '/^---/,/^---/p' tmp/RELEASE-OUTPUT | sed '/^---$/d' > tmp/CHANGELOG_CHANGES
           echo "TAG_RELEASE=$(grep -w 'tagging release' tmp/RELEASE-OUTPUT | cut -d' ' -f4)" >> $GITHUB_ENV
 
-          # grep -w 'tagging release' tmp/RELEASE-OUTPUT | cut -d' ' -f4 > tmp/TAG_RELEASE
-          # echo "CHANGELOG_CHANGES=$(sed -n '/^---/,/^---/p' tmp/RELEASE-OUTPUT | sed '/^---$/d')" >> $GITHUB_ENV
-          # git describe --abbrev=0
-
       - name: standard-version the real deal
         run: |-
           git config --global user.email "tinybuilder@productdock.com"
@@ -49,7 +45,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: '*.tgz'
-          commit: use-standard-version
+          commit: master
           tag: ${{ env.TAG_RELEASE }}
           generateReleaseNotes: true
           bodyFile: tmp/CHANGELOG_CHANGES
